@@ -6,6 +6,7 @@ export default function Footer(){
           <strong>Prometeo</strong><br/>
           <small>© {new Date().getFullYear()} · Todos los derechos reservados</small>
         </div>
+        {/* 
         <div>
           <strong>Tema</strong><br/>
           <small>Página</small><br/>
@@ -17,11 +18,16 @@ export default function Footer(){
           <small>Productos</small><br/>
           <small>Planes</small>
         </div>
+        */}
         <div>
           <strong>Redes</strong><br/>
-          <small>Facebook</small><br/>
-          <small>Instagram</small><br/>
-          <small>LinkedIn</small>
+        <a href="https://www.facebook.com/share/1BsCMfKQPb/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+  <small>Facebook</small>
+</a><br/>
+             <a href="https://www.instagram.com/prothecmx/#" target="_blank" rel="noopener noreferrer">
+  <small>Instagram</small>
+</a><br/>
+         
         </div>
       </div>
     </footer>
