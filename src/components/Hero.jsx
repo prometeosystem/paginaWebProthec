@@ -6,7 +6,7 @@ export default function Hero(){
       <div>
         <h1 className="h1">La oportunidad ha llegado</h1>
         <p className="p-lead">
-          Potencia tu negocio con herramientas digitales. Con Prometeo tendrás la
+          Potencia tu negocio con herramientas digitales. Con nosotros tendrás la
           oportunidad y nos adaptaremos a tus necesidades.
         </p>
         <div style={{display:'flex', gap:10}}>

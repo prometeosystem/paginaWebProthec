@@ -3,8 +3,10 @@ export default function Footer(){
     <footer className="footer">
       <div className="container footer-inner">
         <div>
-          <strong>Prometeo</strong><br/>
-          <small>© {new Date().getFullYear()} · Todos los derechos reservados</small>
+          <strong>Prothrc</strong><br/>
+         { /*<small>© {new Date().getFullYear()} · Todos los derechos reservados</small>*/}
+          <small> {new Date().getFullYear()} · Soluciones con propósito</small>
+
         </div>
         {/* 
         <div>

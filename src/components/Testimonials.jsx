@@ -1,18 +1,36 @@
 import avatar1 from '../assets/avatar1.png'
 
 export default function Testimonials(){
+  const testimonios = [
+    {
+      comentario: 'Formalidad en todo el proceso',
+      nombre: 'Juan Manuel',
+      ocupacion: ''
+    },
+    {
+      comentario: 'Gran compromiso con las personas',
+      nombre: 'Carlos Garcia',
+      ocupacion: ''
+    },
+    {
+      comentario: 'Conicimiento en el área',
+      nombre: 'David Rojas',
+      ocupacion: ''
+    }
+  ];
+
   return (
     <section className="section">
       <h3 className="section-title">Referencias</h3>
       <div className="testi">
-        {['Un magnífico elogio','Un comentario fantástico','Una reseña entusiasta'].map((t,i)=>(
+        {testimonios.map((item, i) => (
           <figure className="quote" key={i}>
-            <blockquote style={{margin:0, fontSize:13}}>
-              “{t}…”
+            <blockquote style={{ margin: 0, fontSize: 13 }}>
+              “{item.comentario}…”
             </blockquote>
-            <figcaption style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}>
-              <img src={avatar1} width="28" height="28" style={{borderRadius:'50%'}} alt="Avatar" />
-              <small>Nombre · Ocupación</small>
+            <figcaption style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10 }}>
+              <img src={avatar1} width="28" height="28" style={{ borderRadius: '50%' }} alt="Avatar" />
+              <small>{item.nombre} · {item.ocupacion}</small>
             </figcaption>
           </figure>
         ))}
