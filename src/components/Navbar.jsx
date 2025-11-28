@@ -1,6 +1,23 @@
+import { useEffect, useState } from 'react'
 import logo from '../assets/logo.png'
+import { FaSun, FaMoon } from 'react-icons/fa'
 
 export default function Navbar(){
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const savedTheme = window.localStorage.getItem('theme')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    setTheme(savedTheme || (prefersDark ? 'dark' : 'light'))
+  }, [])
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    document.documentElement.setAttribute('data-theme', theme)
+    window.localStorage.setItem('theme', theme)
+  }, [theme])
+
   return (
     <header className="nav">
       <div className="container nav-inner">
@@ -25,6 +42,14 @@ export default function Navbar(){
           <a href="#planes">Planes</a>
           <a href="#contacto" className="btn btn-secondary">Contacto</a>
         </nav>
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={() => setTheme(prev => (prev === 'light' ? 'dark' : 'light'))}
+          aria-label="Alternar tema"
+        >
+          {theme === 'light' ? <FaMoon size={18} aria-label="Modo oscuro" /> : <FaSun size={18} aria-label="Modo claro" />}
+        </button>
       </div>
     </header>
   )

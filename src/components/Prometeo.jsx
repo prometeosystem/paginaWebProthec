@@ -2,7 +2,7 @@ import prom from '../assets/prom_dev.jpg'
 
 export default function Prometeo() {
   return (
-    <section id="prometeo" className="section">
+    <section id="prometeo" className="section animatable" data-animate>
       {/* Título más grande y con nuevo nombre */}
       <h3 className="section-title" style={{ fontSize: 42, letterSpacing: '-0.02em' }}>
         Prothec

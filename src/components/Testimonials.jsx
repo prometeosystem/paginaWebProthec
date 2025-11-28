@@ -13,14 +13,14 @@ export default function Testimonials(){
       ocupacion: ''
     },
     {
-      comentario: 'Conicimiento en el área',
+      comentario: 'Conocimiento en el área',
       nombre: 'David Rojas',
       ocupacion: ''
     }
   ];
 
   return (
-    <section className="section">
+    <section className="section animatable" data-animate>
       <h3 className="section-title">Referencias</h3>
       <div className="testi">
         {testimonios.map((item, i) => (

@@ -8,7 +8,7 @@ export default function Contact(){
   const gmail  = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
   return (
-    <section id="contacto" className="section" style={{ padding: '40px 0' }}>
+    <section id="contacto" className="section animatable" data-animate style={{ padding: '40px 0' }}>
       <h3 className="section-title">Contacto</h3>
       <div className="contact" style={{ maxWidth: '500px', margin: '0 auto' }}>
         <div className="grid" style={{ gap: '12px' }}>
@@ -19,7 +19,7 @@ export default function Contact(){
           {/* Botón WhatsApp */}
           <a
             className="btn btn-primary"
-            href="https://wa.me/527779313920"
+            href="https://wa.me/527772097203"
             target="_blank"
             rel="noopener noreferrer"
             style={{ justifyContent: 'center' }}
