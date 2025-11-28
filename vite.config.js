@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/paginaWebProthec/', // 👈 nombre exacto del repo
+  base: '/', // 👈 nombre exacto del repo
 })
