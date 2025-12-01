@@ -12,7 +12,7 @@ const items = [
     detail:
       'Tu mejor vendedor las 24 horas. No es solo información, es seducción: la cara digital que el mundo ve cuando busca tus servicios.',
     functionText:
-      'Función principal: enamorar al cliente nuevo, generar confianza y convencerlos de que te contacten o compren.',
+      'Enamorar al cliente nuevo, generar confianza y convencerlos de que te contacten o compren.',
     superpower: 'El alcance. Miles de personas descubren quién eres y qué ofreces sin barreras.',
     idealFor: 'Ideal para atraer clientes nuevos y dar prestigio a la marca.',
     example: 'Ejemplo: el sitio de un restaurante con menú y fotos, o de un abogado explicando sus servicios.',
@@ -24,7 +24,7 @@ const items = [
     desc: 'Una herramienta potente para la operación diaria de tu negocio.',
     detail:
       'Tu centro de servicio potente. Es como una página web con superpoderes: permite resolver problemas, coordinar equipos y entregar servicios sin instalar nada.',
-    functionText: 'Función principal: generar valor constante a través de interacciones complejas que el usuario aprovecha desde cualquier computadora.',
+    functionText: 'Generar valor constante a través de interacciones complejas que el usuario aprovecha desde cualquier computadora.',
     superpower: 'La funcionalidad. Hace tareas pesadas sencillas y accesibles.',
     idealFor: 'Ideal para entregar servicio, gestionar clientes y automatizar procesos internos.',
     example: 'Ejemplo: banca en línea, el panel de Airbnb o Google Drive.',
@@ -36,7 +36,7 @@ const items = [
     desc: 'Una experiencia premium que vive en el bolsillo del cliente.',
     detail:
       'La experiencia VIP en el bolsillo. La app más íntima con tu cliente: rápida, fluida y siempre presente.',
-    functionText: 'Función principal: ofrecer la experiencia más cómoda con avisos, geolocalización y compras en segundos.',
+    functionText: 'Ofrecer la experiencia más cómoda con avisos, geolocalización y compras en segundos.',
     superpower: 'La fidelización. Crea un hábito de uso diario y posiciona tu marca en la rutina.',
     idealFor: 'Ideal para clientes recurrentes que necesitan inmediatez y una experiencia perfecta.',
     example: 'Ejemplo: Uber, Instagram o la app de un banco con huella digital.',
