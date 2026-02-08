@@ -26,7 +26,7 @@ const casos = [
 export default function Gallery() {
   return (
     <section id="casos" className="section gallery-section animatable" data-animate>
-      <h3 className="section-title">Casos destacados</h3>
+      <h3 className="section-title">Soluciones que ofrecemos</h3>
       <div className="gallery-grid">
         {casos.map((item, index) => (
           <article className="case-card" key={item.title}>

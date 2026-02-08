@@ -37,8 +37,8 @@ export default function App() {
         <Products />
         <Stats />
         <Gallery />
-        <Prometeo />
         <Plans />
+        <Prometeo />
         <Testimonials />
         <Contact />
       </main>

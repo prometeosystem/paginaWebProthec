@@ -51,7 +51,7 @@ body {
 
 /* Utils */
 .section {
-  padding: 56px 0;
+  padding: 35px 0;
 }
 
 .h1 {
@@ -172,6 +172,28 @@ body {
   padding: 4px;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-hamburger {
+  display: none;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-hamburger:hover {
+  background: var(--card);
+}
+
 .nav-links {
   display: flex;
   gap: 14px;
@@ -204,6 +226,14 @@ body {
   transform: translateY(-1px);
 }
 
+.theme-toggle-mobile {
+  display: none;
+  width: 100%;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 /* Hero */
 .hero {
   display: grid;
@@ -218,6 +248,7 @@ body {
   overflow: hidden;
   border: 1px solid var(--border);
   box-shadow: 0 20px 35px rgba(2, 6, 23, 0.12);
+  animation: float 8s ease-in-out infinite;
 }
 
 .hero-media img {
@@ -225,7 +256,6 @@ body {
   height: 360px;
   object-fit: cover;
   display: block;
-  animation: float 8s ease-in-out infinite;
 }
 
 .hero-cta {
@@ -305,6 +335,9 @@ body {
 /* Stats */
 .stats-section {
   background: color-mix(in srgb, var(--surface) 100%, #fff 0%);
+  border-radius: 20px;
+  padding: 2rem;
+  overflow: hidden;
 }
 
 .stats-grid {
@@ -666,13 +699,63 @@ body {
     margin-left: 0;
   }
 
+  .nav-hamburger {
+    display: flex;
+  }
+
+  .theme-toggle-desktop {
+    display: none;
+  }
+
+  .theme-toggle-mobile {
+    display: flex;
+  }
+
   .nav-inner {
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: nowrap;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .nav-links {
-    justify-content: center;
-    flex-wrap: wrap;
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    flex-direction: column;
+    background: color-mix(in srgb, var(--bg) 98%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+    gap: 8px;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 49;
+  }
+
+  .nav-menu-open .nav-links {
+    display: flex;
+  }
+
+  .nav-links a {
+    width: 100%;
+    padding: 12px 16px;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .nav .container.nav-inner {
+    position: relative;
+  }
+}
+
+@media (min-width: 801px) {
+  .nav-right {
+    display: flex;
   }
 }
