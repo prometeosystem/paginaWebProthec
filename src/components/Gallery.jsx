@@ -17,9 +17,9 @@ const casos = [
   },
   {
     img: prom,
-    tag: 'Transformación',
-    title: 'Modernización de procesos',
-    desc: 'Te ayudamos a mejorar tus procesos internos y mejorar la eficiencia de tu equipo.'
+    tag: 'Infraestructura',
+    title: 'Infraestructura Tecnológica Integral',
+    desc: 'Equipamos tu negocio con la tecnología que necesita para operar eficientemente: computadoras, escáneres, impresoras de tickets y el software adecuado para gestionar tus procesos.'
   }
 ]
 

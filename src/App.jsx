@@ -32,8 +32,8 @@ export default function App() {
   return (
     <>
       <Navbar />
+      <Hero />
       <main className="container">
-        <Hero />
         <Products />
         <Stats />
         <Gallery />

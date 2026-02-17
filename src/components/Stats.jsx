@@ -1,8 +1,9 @@
 import nirshop from '../assets/nirshop.png'
+import logoZona2 from '../assets/logoZona2.jpeg'
 
 const companies = [
   {
-    img: 'http://34.68.52.27/assets/logo.jpeg',
+    img: logoZona2,
     alt: 'Cafetería Zona 2',
     name: 'Cafetería Zona 2',
     url: 'http://34.68.52.27/',
@@ -62,24 +63,10 @@ export default function Stats() {
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '80px',
-                marginBottom: '1rem',
-              }}
-            >
+            <div className="stats-company-logo">
               <img
                 src={company.img}
                 alt={company.alt}
-                style={{
-                  maxWidth: '120px',
-                  maxHeight: '80px',
-                  objectFit: 'contain',
-                  borderRadius: '8px',
-                }}
                 loading="lazy"
               />
             </div>

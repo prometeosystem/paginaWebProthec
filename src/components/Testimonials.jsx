@@ -1,39 +1,27 @@
-import avatar1 from '../assets/avatar1.png'
+import { FaStar } from 'react-icons/fa'
 
-export default function Testimonials(){
-  const testimonios = [
-    {
-      comentario: 'Formalidad en todo el proceso',
-      nombre: 'Juan Manuel',
-      ocupacion: ''
-    },
-    {
-      comentario: 'Gran compromiso con las personas',
-      nombre: 'Carlos Garcia',
-      ocupacion: ''
-    },
-    {
-      comentario: 'Conocimiento en el área',
-      nombre: 'David Rojas',
-      ocupacion: ''
-    }
-  ];
+const testimonio = {
+  valoracion: 5,
+  titulo: 'Prothec',
+  texto: 'El servicio de Prothec fue excelente durante todo el desarrollo del software. El equipo estuvo siempre al pendiente, resolviendo cada inquietud de manera clara y oportuna. Cada problema o actualización que surgía era atendido con rapidez y profesionalismo, lo que nos dio mucha confianza durante todo el proceso. Sin duda, un servicio altamente recomendable por su compromiso, atención y calidad.'
+}
 
+export default function Testimonials() {
   return (
     <section className="section animatable" data-animate>
       <h3 className="section-title">Referencias</h3>
-      <div className="testi">
-        {testimonios.map((item, i) => (
-          <figure className="quote" key={i}>
-            <blockquote style={{ margin: 0, fontSize: 13 }}>
-              “{item.comentario}…”
-            </blockquote>
-            <figcaption style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10 }}>
-              <img src={avatar1} width="28" height="28" style={{ borderRadius: '50%' }} alt="Avatar" />
-              <small>{item.nombre} · {item.ocupacion}</small>
-            </figcaption>
-          </figure>
-        ))}
+      <div className="testi testi-single">
+        <figure className="quote">
+          <p className="quote-title">
+            <span className="quote-stars" aria-hidden="true">
+              {Array.from({ length: testimonio.valoracion }, (_, i) => (
+                <FaStar key={i} className="quote-star" />
+              ))}
+            </span>
+            {' | '}{testimonio.titulo}
+          </p>
+          <blockquote>{testimonio.texto}</blockquote>
+        </figure>
       </div>
     </section>
   )
