@@ -1,3 +1,4 @@
+import escritorio from '../assets/escritorio-azul.jpeg'
 export default function Problem() {
   return (
     <section id="problema" className="section section-problem animatable" data-animate>
@@ -17,7 +18,7 @@ export default function Problem() {
       </p>
       </div>
       <div className="problem-text-container-right">
-      <img src={"https://placehold.co/400x400"} alt="Problem" />
+      <img src={escritorio} style={{ width: '550px', height: '400px', objectFit: 'cover' }} alt="Problem" />
       </div>
      </div>
     </section>

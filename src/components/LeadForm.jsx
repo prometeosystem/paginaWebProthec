@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Swal from 'sweetalert2'
 
 const API_URL = import.meta.env.VITE_API_URL || ''
 
@@ -32,11 +33,15 @@ export default function LeadForm() {
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok) {
-        setStatus('success')
-        setMessage(data.message || 'Te contactaremos pronto.')
         setNombre('')
         setEmail('')
         setTelefono('')
+        await Swal.fire({
+          icon: 'success',
+          title: '¡Registro exitoso!',
+          text: 'Su registro se realizó con éxito. Pronto alguien se pondrá en contacto con usted.',
+          confirmButtonColor: '#2563eb'
+        })
       } else {
         setStatus('error')
         setMessage(data.error || 'No se pudo enviar. Intenta de nuevo.')

@@ -27,6 +27,23 @@ function getPool() {
   })
 }
 
+async function ensureLeadsTable() {
+  const pool = getPool()
+  try {
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS leads (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        telefono VARCHAR(50) DEFAULT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `)
+  } finally {
+    await pool.end()
+  }
+}
+
 app.post('/api/leads', async (req, res) => {
   const { nombre, email, telefono } = req.body ?? {}
 
@@ -57,6 +74,9 @@ app.post('/api/leads', async (req, res) => {
   }
 })
 
-app.listen(PORT, () => {
-  console.log(`API escuchando en http://localhost:${PORT}`)
-})
+;(async () => {
+  await ensureLeadsTable()
+  app.listen(PORT, () => {
+    console.log(`API escuchando en http://localhost:${PORT}`)
+  })
+})()
