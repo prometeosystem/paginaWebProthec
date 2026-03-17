@@ -1,124 +1,118 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
+import { FaWhatsapp } from 'react-icons/fa'
 import prodWeb from '../assets/prod_web.jpg'
 import prodMobile from '../assets/prod_mobile.jpg'
-import prodSaas from '../assets/prod_saas.jpg'
+import planFin from '../assets/plan_fin.jpg'
 
-const items = [
+const WHATSAPP_NUMBER = '527772097203'
+
+const packages = [
   {
-    img: prodWeb,
-    title: 'Página Web',
-    desc: 'Un sitio que informa, inspira confianza y convierte visitantes en contactos.',
-    detail:
-      'Tu mejor vendedor las 24 horas. No es solo información, es seducción: la cara digital que el mundo ve cuando busca tus servicios.',
-    functionText:
-      'Enamorar al cliente nuevo, generar confianza y convencerlos de que te contacten o compren.',
-    superpower: 'El alcance. Miles de personas descubren quién eres y qué ofreces sin barreras.',
-    idealFor: 'Ideal para atraer clientes nuevos y dar prestigio a la marca.',
-    example: 'Ejemplo: el sitio de un restaurante con menú y fotos, o de un abogado explicando sus servicios.',
-    features: ['Arquitectura SEO desde el inicio', 'Integración con CMS o e-commerce ligero', 'Optimización para móviles y velocidad']
+    id: 'embudo',
+    title: 'Embudo de Ventas (Landing Page de Alta Conversión)',
+    forLabel: 'Para negocios que necesitan dejar de perder clientes en redes sociales.',
+    description: 'Diseñamos una página ultrarrápida enfocada en convertir a los curiosos en prospectos reales que llegan directamente a tu WhatsApp, listos para comprar.',
+    includes: ['Diseño persuasivo', 'Botones de contacto directo', 'Optimización para celulares y conexión rápida'],
+    setup: '2,900',
+    monthly: '400',
+    cta: 'Ver demostración',
+    msg: 'Hola Prothec, me interesa ver una demostración rápida de Embudo de Ventas (Landing) para mi negocio.',
+    img: prodWeb
   },
   {
-    img: prodSaas,
-    title: 'Plataforma Web',
-    desc: 'Una herramienta potente para la operación diaria de tu negocio.',
-    detail:
-      'Tu centro de servicio potente. Es como una página web con superpoderes: permite resolver problemas, coordinar equipos y entregar servicios sin instalar nada.',
-    functionText: 'Generar valor constante a través de interacciones complejas que el usuario aprovecha desde cualquier computadora.',
-    superpower: 'La funcionalidad. Hace tareas pesadas sencillas y accesibles.',
-    idealFor: 'Ideal para entregar servicio, gestionar clientes y automatizar procesos internos.',
-    example: 'Ejemplo: banca en línea, el panel de Airbnb o Google Drive.',
-    features: ['Dashboards con datos en tiempo real', 'Roles y permisos para equipos', 'Automatizaciones y API públicas']
+    id: 'pos',
+    title: 'Sistema de Punto de Venta (POS) y Gestión',
+    forLabel: 'Para cafeterías, tiendas y comercio minorista.',
+    description: 'Dile adiós a los cuadernos. Controla tus ventas, visualiza tu inventario en tiempo real, emite tickets y cuadra tu caja en 5 minutos desde cualquier dispositivo.',
+    includes: ['Módulo de ventas', 'Inventarios', 'Reportes de ganancias y control de caja'],
+    setup: '4,900',
+    monthly: '500',
+    cta: 'Agendar prueba de sistema',
+    msg: 'Hola Prothec, me interesa ver una demostración rápida de Sistema de Punto de Venta para mi negocio.',
+    img: planFin
   },
   {
-    img: prodMobile,
-    title: 'Aplicación Móvil',
-    desc: 'Una experiencia premium que vive en el bolsillo del cliente.',
-    detail:
-      'La experiencia VIP en el bolsillo. La app más íntima con tu cliente: rápida, fluida y siempre presente.',
-    functionText: 'Ofrecer la experiencia más cómoda con avisos, geolocalización y compras en segundos.',
-    superpower: 'La fidelización. Crea un hábito de uso diario y posiciona tu marca en la rutina.',
-    idealFor: 'Ideal para clientes recurrentes que necesitan inmediatez y una experiencia perfecta.',
-    example: 'Ejemplo: Uber, Instagram o la app de un banco con huella digital.',
-    features: ['Sincronización en segundo plano', 'Integración con cámaras/sensores', 'Experiencias offline ligeras']
+    id: 'reservaciones',
+    title: 'Sistema de Reservaciones Inteligente',
+    forLabel: 'Para clínicas, salones, spas y restaurantes.',
+    description: 'Deja que el sistema llene tu agenda por ti. Tus clientes podrán ver tu disponibilidad y reservar sus citas 24/7 sin que tengas que contestar un solo mensaje manualmente.',
+    includes: ['Agenda digital interactiva', 'Recordatorios automáticos', 'Control de disponibilidad'],
+    setup: '2,500',
+    monthly: '300',
+    cta: 'Quiero automatizar mi agenda',
+    msg: 'Hola Prothec, me interesa ver una demostración rápida de Sistema de Reservaciones para mi negocio.',
+    img: prodMobile
   }
 ]
 
-export default function Products(){
-  const [selected, setSelected] = useState(null)
+const TOOLTIP_OFFSET = 0
 
-  useEffect(() => {
-    if (!selected) return
-    const handle = (event) => {
-      if (event.key === 'Escape') setSelected(null)
-    }
-    window.addEventListener('keydown', handle)
-    return () => window.removeEventListener('keydown', handle)
-  }, [selected])
+export default function Products() {
+  const [hoveredId, setHoveredId] = useState(null)
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
 
-  const modalContent = selected ? (
-    <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={() => setSelected(null)}>
-      <article className="modal-card" onClick={(event) => event.stopPropagation()}>
-        <header>
-          <h3 id="modal-title">{selected.title}</h3>
-          <p className="modal-detail">{selected.detail}</p>
-        </header>
-        <div className="modal-grid modal-grid-stack">
-          <section className="modal-section">
-            <p className="modal-label">Función principal</p>
-            <p>{selected.functionText}</p>
-          </section>
-          <section className="modal-section">
-            <p className="modal-label">Superpoder</p>
-            <p>{selected.superpower}</p>
-          </section>
-          <section className="modal-section">
-            <p className="modal-label">Ideal para</p>
-            <p>{selected.idealFor}</p>
-          </section>
-        </div>
-        <section>
-          <p className="modal-label">Ejemplo</p>
-          <p>{selected.example}</p>
-        </section>
-        <section className="modal-difference">
-          <p>{selected.keyMessage}</p>
-        </section>
-        <button className="btn btn-secondary modal-close" onClick={() => setSelected(null)}>
-          Cerrar
-        </button>
-      </article>
-    </div>
-  ) : null
+  const handleCardMouseEnter = (pkgId, e) => {
+    setHoveredId(pkgId)
+    setTooltipPos({ x: e.clientX + TOOLTIP_OFFSET, y: e.clientY + TOOLTIP_OFFSET })
+  }
 
-  const modalNode =
-    modalContent && typeof document !== 'undefined'
-      ? createPortal(modalContent, document.body)
-      : modalContent
+  const handleCardMouseMove = (e) => {
+    const x = e.clientX + TOOLTIP_OFFSET
+    const y = e.clientY + TOOLTIP_OFFSET
+    setTooltipPos({ x, y })
+  }
+
+  const hoveredPkg = packages.find((p) => p.id === hoveredId)
 
   return (
-    <section id="productos" className="section animatable" data-animate>
-      <h3 className="section-title">Productos</h3>
-      <div className="grid grid-3">
-        {items.map((p, i)=>(
-          <article
-            className="card interactive-card"
-            key={i}
-            role="button"
-            tabIndex={0}
-            onClick={() => setSelected(p)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') setSelected(p)
-            }}
-          >
-            <img className="img" src={p.img} alt={p.title}/>
-            <h4 className="product-title">{p.title}</h4>
-            <p className="product-desc">{p.desc}</p>
-          </article>
-        ))}
+    <section id="productos" className="section section-products animatable" data-animate>
+      <h2 className="section-title">Soluciones prácticas para negocios reales.</h2>
+      <p className="products-subtitle">
+        <strong>Conoce nuestro Modelo de Inversión Inteligente:</strong> Olvídate de pagar grandes sumas de contado. Todos nuestros sistemas funcionan con un <strong>Costo de Instalación (Setup)</strong> inicial muy accesible y una <strong>Mensualidad Fija</strong> que cubre tu hospedaje en la nube, mantenimiento y soporte técnico continuo.
+      </p>
+      <div className="products-grid">
+        {packages.map((pkg) => {
+          const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(pkg.msg)}`
+          return (
+            <article
+              key={pkg.id}
+              className="product-card"
+              onMouseEnter={(e) => handleCardMouseEnter(pkg.id, e)}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={() => setHoveredId(null)}
+            >
+              <div className="product-card-image">
+                <img src={pkg.img} alt={pkg.title} loading="lazy" />
+              </div>
+              <div className="product-card-body">
+                <h3 className="product-card-title">{pkg.title}</h3>
+                <p className="product-card-for">{pkg.forLabel}</p>
+                <p className="product-card-desc">{pkg.description}</p>
+                <p className="product-card-price">
+                  <strong>Inversión Promocional:</strong> Instalación desde <strong>${pkg.setup} MXN</strong> + Mensualidad de <strong>${pkg.monthly} MXN</strong>
+                  {pkg.id === 'pos' && ' (Tu negocio seguro y respaldado).'}
+                  {pkg.id === 'embudo' && ' (Incluye hosting y soporte).'}
+                  {pkg.id === 'reservaciones' && '.'}
+                </p>
+                <a href={waUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary product-card-cta">
+                  <FaWhatsapp size={18} /> {pkg.cta}
+                </a>
+              </div>
+            </article>
+          )
+        })}
       </div>
-
-      {modalNode}
+      {hoveredPkg?.includes?.length > 0 &&
+        createPortal(
+          <div
+            className="product-card-tooltip product-card-tooltip--follow"
+            style={{ left: tooltipPos.x, top: tooltipPos.y }}
+          >
+            <strong>Incluye:</strong> {hoveredPkg.includes.join(', ')}.
+          </div>,
+          document.body
+        )}
     </section>
   )
 }

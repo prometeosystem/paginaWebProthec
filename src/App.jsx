@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
+import logo from './assets/logo-sin-fondo.png'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import FloatingWhatsApp from './components/FloatingWhatsApp'
+import Problem from './components/Problem'
+import Differentiator from './components/Differentiator'
 import Products from './components/Products'
-import Stats from './components/Stats'
-import Gallery from './components/Gallery'
-import Prometeo from './components/Prometeo'
-import Plans from './components/Plans'
-import Testimonials from './components/Testimonials'
-import Contact from './components/Contact'
+import Process from './components/Process'
+import FinalCTA from './components/FinalCTA'
+import LeadForm from './components/LeadForm'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -30,19 +31,24 @@ export default function App() {
   }, [])
 
   return (
-    <>
+    <div className="app-wrap">
+      <div className="page-logo-deco-wrap" aria-hidden="true">
+        <div className="page-logo-deco">
+          <img src={logo} alt="" />
+        </div>
+      </div>
       <Navbar />
       <Hero />
-      <main className="container">
+      <main className="container main-content">
+        <Problem />
+        <Differentiator />
         <Products />
-        <Stats />
-        <Gallery />
-        <Plans />
-        <Prometeo />
-        <Testimonials />
-        <Contact />
+        <Process />
+        <FinalCTA />
+        <LeadForm />
       </main>
       <Footer />
-    </>
+      <FloatingWhatsApp />
+    </div>
   )
 }
