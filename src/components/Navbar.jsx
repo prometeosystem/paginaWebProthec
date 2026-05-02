@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import logo from '../assets/logo.png'
 import { FaSun, FaMoon, FaWhatsapp } from 'react-icons/fa'
+import { trackCtaClick } from '../analytics.js'
 
 const WHATSAPP_NUMBER = '527772097203'
 const WHATSAPP_MSG = 'Hola Prothec, me interesa ver una demostración rápida para mi negocio.'
@@ -46,6 +47,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary btn-whatsapp-nav"
+            onClick={() => trackCtaClick('navbar')}
           >
             <FaWhatsapp size={18} /> <span className="btn-whatsapp-nav-text">Solicitar demostración</span>
           </a>

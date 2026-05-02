@@ -1,4 +1,5 @@
 import { FaWhatsapp } from 'react-icons/fa'
+import { trackCtaClick } from '../analytics.js'
 
 const WHATSAPP_NUMBER = '527772097203'
 const WHATSAPP_MSG = 'Hola Prothec, me interesa agendar una demostración rápida por WhatsApp.'
@@ -14,7 +15,13 @@ export default function FinalCTA() {
 
        <p> Da el primer paso hoy. Escríbenos por WhatsApp y agendemos una demostración rápida sin ningún compromiso.
       </p>
-      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary final-cta-btn">
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn btn-primary final-cta-btn"
+        onClick={() => trackCtaClick('final_cta')}
+      >
         <FaWhatsapp size={22} /> Hablemos por WhatsApp
       </a>
     </section>

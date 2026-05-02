@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { FaWhatsapp } from 'react-icons/fa'
+import { trackCtaClick } from '../analytics.js'
 import prodWeb from '../assets/prod_web.jpg'
 import prodMobile from '../assets/prod_mobile.jpg'
 import planFin from '../assets/plan_fin.jpg'
@@ -95,7 +96,13 @@ export default function Products() {
                   {pkg.id === 'embudo' && ' (Incluye hosting y soporte).'}
                   {pkg.id === 'reservaciones' && '.'}
                 </p>
-                <a href={waUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary product-card-cta">
+                <a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary product-card-cta"
+                  onClick={() => trackCtaClick(`products_${pkg.id}`)}
+                >
                   <FaWhatsapp size={18} /> {pkg.cta}
                 </a>
               </div>

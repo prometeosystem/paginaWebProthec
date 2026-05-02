@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import logo from './assets/logo-sin-fondo.png'
+import { subscribeScrollDepth50 } from './analytics.js'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
@@ -12,6 +13,8 @@ import LeadForm from './components/LeadForm'
 import Footer from './components/Footer'
 
 export default function App() {
+  useEffect(() => subscribeScrollDepth50(), [])
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {

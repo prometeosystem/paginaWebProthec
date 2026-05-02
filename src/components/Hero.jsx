@@ -1,5 +1,6 @@
 import hero from '../assets/hero.jpg'
 import { FaWhatsapp } from 'react-icons/fa'
+import { trackCtaClick } from '../analytics.js'
 
 const WHATSAPP_NUMBER = '527772097203'
 const WHATSAPP_MSG = 'Hola Prothec, me interesa ver una demostración rápida para mi negocio.'
@@ -24,7 +25,13 @@ export default function Hero() {
           <br />Todo con sistemas fáciles de usar y sin descapitalizarte.
         </p>
         <div className="hero-cta" style={{marginTop: '40px'}}>
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+            onClick={() => trackCtaClick('hero')}
+          >
             <FaWhatsapp size={20} /> Solicitar una Demostración de 10 minutos
           </a>
         </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Swal from 'sweetalert2'
+import { trackLeadGenerated } from '../analytics.js'
 
 const API_URL = import.meta.env.VITE_API_URL || ''
 
@@ -33,6 +34,7 @@ export default function LeadForm() {
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok) {
+        trackLeadGenerated()
         setNombre('')
         setEmail('')
         setTelefono('')
