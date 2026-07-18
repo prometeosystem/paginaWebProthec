@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prometeosystem.github.io/paginaWebProthec/sitemap.xml

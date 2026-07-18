@@ -1,9 +1,8 @@
 import { FaWhatsapp } from 'react-icons/fa'
 import { trackCtaClick } from '../analytics.js'
+import { whatsappUrl, WHATSAPP_MSG_DEMO } from '../config.js'
 
-const WHATSAPP_NUMBER = '527772097203'
-const WHATSAPP_MSG = 'Hola Prothec, me interesa ver una demostración rápida para mi negocio.'
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MSG)}`
+const WHATSAPP_URL = whatsappUrl(WHATSAPP_MSG_DEMO)
 
 export default function FloatingWhatsApp() {
   return (
@@ -15,7 +14,7 @@ export default function FloatingWhatsApp() {
       aria-label="Solicitar demostración por WhatsApp"
       onClick={() => trackCtaClick('floating_whatsapp')}
     >
-      <FaWhatsapp size={28} />
+      <FaWhatsapp size={26} aria-hidden="true" />
       <span className="floating-whatsapp-label">Solicitar demostración</span>
     </a>
   )

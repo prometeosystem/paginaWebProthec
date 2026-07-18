@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import Swal from 'sweetalert2'
+import { FaCheckCircle, FaPaperPlane } from 'react-icons/fa'
 import { trackLeadGenerated } from '../analytics.js'
+import PrivacyModal from './PrivacyModal.jsx'
 
 const API_URL = import.meta.env.VITE_API_URL || ''
 
@@ -8,9 +9,11 @@ export default function LeadForm() {
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [telefono, setTelefono] = useState('')
+  const [website, setWebsite] = useState('') // honeypot antispam: los humanos no lo ven
   const [status, setStatus] = useState(null) // 'success' | 'error'
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPrivacy, setShowPrivacy] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -29,7 +32,8 @@ export default function LeadForm() {
         body: JSON.stringify({
           nombre: nombre.trim(),
           email: email.trim(),
-          telefono: telefono.trim() || undefined
+          telefono: telefono.trim() || undefined,
+          website: website || undefined
         })
       })
       const data = await res.json().catch(() => ({}))
@@ -38,19 +42,15 @@ export default function LeadForm() {
         setNombre('')
         setEmail('')
         setTelefono('')
-        await Swal.fire({
-          icon: 'success',
-          title: '¡Registro exitoso!',
-          text: 'Su registro se realizó con éxito. Pronto alguien se pondrá en contacto con usted.',
-          confirmButtonColor: '#2563eb'
-        })
+        setStatus('success')
+        setMessage('¡Registro exitoso! Pronto alguien se pondrá en contacto contigo.')
       } else {
         setStatus('error')
         setMessage(data.error || 'No se pudo enviar. Intenta de nuevo.')
       }
     } catch {
       setStatus('error')
-      setMessage('Error de conexión. Revisa que la API esté en marcha o intenta más tarde.')
+      setMessage('Error de conexión. Intenta más tarde o escríbenos por WhatsApp.')
     } finally {
       setLoading(false)
     }
@@ -58,53 +58,79 @@ export default function LeadForm() {
 
   return (
     <section id="contacto" className="section section-leadform animatable" data-animate>
-      <h2 className="section-title">Hablar con un asesor</h2>
-      <p className="leadform-intro">Deja tus datos y te respondemos a la brevedad.</p>
-      <form className="leadform" onSubmit={handleSubmit}>
-        <label className="leadform-label">
-          <span>Nombre <span className="required">*</span></span>
-          <input
-            type="text"
-            className="leadform-input"
-            value={nombre}
-            onChange={e => setNombre(e.target.value)}
-            placeholder="Tu nombre"
-            required
-            disabled={loading}
-          />
-        </label>
-        <label className="leadform-label">
-          <span>Correo <span className="required">*</span></span>
-          <input
-            type="email"
-            className="leadform-input"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="tu@correo.com"
-            required
-            disabled={loading}
-          />
-        </label>
-        <label className="leadform-label">
-          Teléfono (opcional)
-          <input
-            type="tel"
-            className="leadform-input"
-            value={telefono}
-            onChange={e => setTelefono(e.target.value)}
-            placeholder="55 1234 5678"
-            disabled={loading}
-          />
-        </label>
-        {status && (
-          <p className={`leadform-message leadform-message--${status}`} role="alert">
-            {message}
+      <div className="leadform-wrap">
+        <p className="kicker">Contacto</p>
+        <h2 className="section-title">Hablar con un asesor</h2>
+        <p className="leadform-intro">Deja tus datos y te respondemos a la brevedad.</p>
+        <form className="leadform" onSubmit={handleSubmit}>
+          <label className="leadform-label">
+            <span>Nombre <span className="required">*</span></span>
+            <input
+              type="text"
+              className="leadform-input"
+              value={nombre}
+              onChange={e => setNombre(e.target.value)}
+              placeholder="Tu nombre"
+              autoComplete="name"
+              required
+              disabled={loading}
+            />
+          </label>
+          <label className="leadform-label">
+            <span>Correo <span className="required">*</span></span>
+            <input
+              type="email"
+              className="leadform-input"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="tu@correo.com"
+              autoComplete="email"
+              required
+              disabled={loading}
+            />
+          </label>
+          <label className="leadform-label">
+            <span>Teléfono (opcional)</span>
+            <input
+              type="tel"
+              className="leadform-input"
+              value={telefono}
+              onChange={e => setTelefono(e.target.value)}
+              placeholder="55 1234 5678"
+              autoComplete="tel"
+              disabled={loading}
+            />
+          </label>
+          {/* Campo trampa para bots: oculto para personas y lectores de pantalla */}
+          <div className="leadform-honeypot" aria-hidden="true">
+            <label>
+              No llenes este campo
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={e => setWebsite(e.target.value)}
+              />
+            </label>
+          </div>
+          {status && (
+            <p className={`leadform-message leadform-message--${status}`} role="alert">
+              {status === 'success' && <FaCheckCircle aria-hidden="true" />} {message}
+            </p>
+          )}
+          <button type="submit" className="btn btn-primary leadform-submit" disabled={loading}>
+            {loading ? 'Enviando…' : <><FaPaperPlane aria-hidden="true" /> Enviar</>}
+          </button>
+          <p className="leadform-privacy">
+            Al enviar aceptas nuestro{' '}
+            <button type="button" className="link-button" onClick={() => setShowPrivacy(true)}>
+              aviso de privacidad
+            </button>.
           </p>
-        )}
-        <button type="submit" className="btn btn-primary leadform-submit" disabled={loading}>
-          {loading ? 'Enviando…' : 'Enviar'}
-        </button>
-      </form>
+        </form>
+      </div>
+      {showPrivacy && <PrivacyModal onClose={() => setShowPrivacy(false)} />}
     </section>
   )
 }

@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
+import rateLimit from 'express-rate-limit'
 import mysql from 'mysql2/promise'
 
 const app = express()
@@ -15,37 +16,46 @@ app.use(cors({
 }))
 app.use(express.json())
 
-function getPool() {
-  return mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-  })
-}
+// Máximo 5 envíos por IP cada 15 minutos: suficiente para humanos, frena bots
+const leadsLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Demasiados intentos. Espera unos minutos e intenta de nuevo.' }
+})
+
+// Pool único compartido por todas las peticiones
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+})
 
 async function ensureLeadsTable() {
-  const pool = getPool()
-  try {
-    await pool.execute(`
-      CREATE TABLE IF NOT EXISTS leads (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nombre VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        telefono VARCHAR(50) DEFAULT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )
-    `)
-  } finally {
-    await pool.end()
-  }
+  await pool.execute(`
+    CREATE TABLE IF NOT EXISTS leads (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      nombre VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      telefono VARCHAR(50) DEFAULT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `)
 }
 
-app.post('/api/leads', async (req, res) => {
-  const { nombre, email, telefono } = req.body ?? {}
+app.post('/api/leads', leadsLimiter, async (req, res) => {
+  const { nombre, email, telefono, website } = req.body ?? {}
+
+  // Honeypot: el campo "website" está oculto en el formulario; si llega lleno, es un bot.
+  // Respondemos 201 para no darle pistas.
+  if (website) {
+    return res.status(201).json({ ok: true, message: 'Lead registrado correctamente.' })
+  }
 
   if (!nombre || typeof nombre !== 'string' || nombre.trim().length === 0) {
     return res.status(400).json({ error: 'El nombre es obligatorio.' })
@@ -59,7 +69,6 @@ app.post('/api/leads', async (req, res) => {
     return res.status(400).json({ error: 'Correo electrónico no válido.' })
   }
 
-  const pool = getPool()
   try {
     await pool.execute(
       'INSERT INTO leads (nombre, email, telefono) VALUES (?, ?, ?)',
@@ -69,8 +78,6 @@ app.post('/api/leads', async (req, res) => {
   } catch (err) {
     console.error('Error al guardar lead:', err)
     return res.status(500).json({ error: 'Error al guardar. Intenta de nuevo más tarde.' })
-  } finally {
-    await pool.end()
   }
 })
 
